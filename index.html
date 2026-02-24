@@ -177,6 +177,12 @@
 
         .filter-select {
             appearance: none; background: white; border: 2px solid var(--border-light); border-radius: 16px; padding: 12px 20px; font-size: 13px; font-weight: 600; color: var(--text-primary); cursor: pointer; outline: none; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); min-width: 240px; box-shadow: var(--shadow-sm); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center;
+            
+            /* NUEVO: Para evitar que el texto largo desborde */
+            max-width: 300px; 
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .filter-select:hover { border-color: var(--brand-primary); box-shadow: var(--shadow-md), var(--shadow-glow); transform: translateY(-2px); }
         .filter-select:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(79,70,229,0.1), var(--shadow-md); }
@@ -199,11 +205,11 @@
         }
 
         .card-executive {
-            background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--card-radius); box-shadow: var(--shadow-sm); transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); backdrop-filter: blur(8px); position: relative; overflow: hidden;
+            background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--card-radius); box-shadow: var(--shadow-sm); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); backdrop-filter: blur(8px); position: relative; overflow: hidden;
         }
-        .card-executive::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary)); transform: translateX(-100%); transition: transform 0.6s cubic-bezier(0.34, 1.56, 64, 1); }
+        .card-executive::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary)); transform: translateX(-100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .card-executive::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(79,70,229,0.1) 0%, transparent 70%); opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
-        .card-executive:hover { box-shadow: var(--shadow-lg), var(--shadow-glow); transform: translateY(-4px) scale(1.02); border-color: var(--brand-primary); }
+        .card-executive:hover { border-color: var(--brand-primary); z-index: 20; }
         .card-executive:hover::before { transform: translateX(0); }
         .card-executive:hover::after { opacity: 1; }
 
@@ -304,10 +310,10 @@
         .tech-text { font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, var(--text-primary), var(--brand-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% 200%; }
 
         .metric-card {
-            background: var(--bg-card); padding: 24px; border-radius: 24px; border: 1px solid var(--border-light); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: var(--shadow-sm); aspect-ratio: 1 / 1; width: 100%; max-width: 280px; min-width: 240px; position: relative; overflow: hidden;
+            background: var(--bg-card); padding: 24px; border-radius: var(--card-radius); border: 1px solid var(--border-light); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--shadow-sm); position: relative; overflow: hidden; height: 100%; min-height: 160px;
         }
-        .metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary)); transform: translateX(-100%); transition: transform 0.6s ease; }
-        .metric-card:hover { box-shadow: var(--shadow-lg), var(--shadow-glow); transform: translateY(-4px) scale(1.02); border-color: var(--brand-primary); }
+        .metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary)); transform: translateX(-100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .metric-card:hover { box-shadow: var(--shadow-xl), var(--shadow-glow) !important; transform: translateY(-8px) !important; border-color: var(--brand-primary) !important; z-index: 20; }
         .metric-card:hover::before { transform: translateX(0); }
 
         .metric-value { font-size: 32px; font-weight: 800; color: var(--text-primary); font-family: 'JetBrains Mono', monospace; transition: all 0.3s ease; line-height: 1.2; }
@@ -419,6 +425,55 @@
             background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 8px 12px; margin: 4px 0; display: flex; align-items: center; justify-content: space-between;
         }
         .file-chip:hover { border-color: var(--brand-primary); }
+
+        /* NUEVA ANIMACIÓN PROFESIONAL PARA BARRAS DE PROGRESO */
+        @keyframes progress-stripes {
+            0% { background-position: 1rem 0; }
+            100% { background-position: 0 0; }
+        }
+        .progress-stripes-anim {
+            background-image: linear-gradient(45deg, rgba(255,255,255,.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.1) 50%, rgba(255,255,255,.1) 75%, transparent 75%, transparent);
+            background-size: 1rem 1rem;
+            animation: progress-stripes 2s linear infinite;
+        }
+
+        /* ANIMACIONES PREMIUM EJECUTIVAS - REFINADAS */
+        .pro-shimmer { position: relative; overflow: hidden; }
+        .pro-shimmer::after { 
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; 
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); 
+            animation: proShimmerSweep 2.5s infinite ease-in-out; pointer-events: none; 
+        }
+        @keyframes proShimmerSweep { 0% { left: -100%; } 100% { left: 200%; } }
+        
+        @keyframes hardwareBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } }
+        .hw-led { animation: hardwareBlink 1.2s steps(1, end) infinite; }
+
+        /* ANIMACIONES PREMIUM DASHBOARD */
+        @keyframes fadeUpSmooth {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); filter: blur(2px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        .anim-fade-up { animation: fadeUpSmooth 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; will-change: transform, opacity; }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+
+        .shine-sweep { position: relative; }
+        .shine-sweep::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent); transform: skewX(-20deg); animation: sweep 6s infinite; pointer-events: none; z-index: 20; }
+        @keyframes sweep { 0% { left: -100%; } 15% { left: 200%; } 100% { left: 200%; } }
+
+        /* EFECTOS ULTRA-PREMIUM Y ESPACIADO SAAS */
+        .bg-grid-pattern { background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 24px 24px; }
+        .bg-grid-pattern-dark { background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 24px 24px; }
+        .bg-dots-pattern { background-image: radial-gradient(rgba(0,0,0,0.08) 1px, transparent 1px); background-size: 16px 16px; }
+        
+        @keyframes floatUpDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        .float-anim { animation: floatUpDown 4s ease-in-out infinite; }
+        
+        .glass-progress { box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 1px 2px rgba(255,255,255,0.5); }
+        .spotlight-dark { background: radial-gradient(circle at top right, #1e1b4b, #020617 70%); }
     </style>
 </head>
 <body class="overflow-hidden">
@@ -530,7 +585,7 @@
                     </div>
                 </div>
 
-                <button onclick="openProjectModal()" class="gradient-static text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg hover:shadow-xl transition-all flex items-center transform hover:scale-105 hover:shadow-2xl">
+                <button onclick="openProjectModal()" class="gradient-static text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg hover:shadow-xl transition-all flex items-center transform hover:scale-105 hover:shadow-2xl shrink-0">
                     <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
                     <span class="hidden sm:inline">Nuevo Proyecto</span>
                     <span class="sm:hidden">Nuevo</span>
@@ -539,97 +594,175 @@
 
             <div id="content-area" class="flex-1 overflow-y-auto p-10 custom-scrollbar space-y-10">
                 <!-- VISTA DASHBOARD -->
-                <section id="view-dashboard" class="space-y-10 animate-view">
-                    <div id="dashboard-announcement-container" class="hidden space-y-3"></div>
+                <section id="view-dashboard" class="space-y-6 pb-24 w-full xl:px-4 pt-4 animate-view">
+                    <div id="dashboard-announcement-container" class="hidden space-y-3 mb-6"></div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- TARJETAS KPI (ESTILO CORPORATIVO SIMÉTRICO) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <!-- KPI: Capital PEN -->
-                        <div class="card-executive p-6 bg-white hover:border-indigo-300 relative overflow-hidden group">
-                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-indigo-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                            <div class="flex justify-between items-start mb-4 relative z-10">
-                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Capital CapEx (PEN)</span>
-                                <div class="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shadow-inner"><i data-lucide="wallet" class="w-4 h-4"></i></div>
+                        <div class="card-executive p-6 bg-white border border-slate-200 flex flex-col justify-between h-full group relative overflow-hidden min-h-[140px] transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl">
+                            <div class="absolute inset-0 bg-dots-pattern opacity-50 pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-slate-100 to-slate-200 group-hover:from-indigo-400 group-hover:to-indigo-600 transition-colors duration-500"></div>
+                            
+                            <div class="flex justify-between items-start mb-4 relative z-10 pt-1">
+                                <div class="flex flex-col space-y-1">
+                                    <h5 class="text-[9px] font-black uppercase tracking-widest text-slate-400">Capital Autorizado</h5>
+                                    <span class="text-[7px] font-black text-slate-500 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded w-max tracking-widest shadow-sm">LOCAL (PEN)</span>
+                                </div>
+                                <div class="w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-indigo-50 group-hover:border-indigo-200 transition-colors shadow-sm">
+                                    <i data-lucide="wallet" class="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-colors"></i>
+                                </div>
                             </div>
-                            <p id="stat-soles" class="text-2xl font-black mono text-slate-800 relative z-10 tracking-tight">S/ 0.00</p>
-                            <div class="mt-4 flex items-center space-x-2 relative z-10">
-                                <span class="status-led success"></span>
-                                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Inversión Local</span>
+                            
+                            <div class="flex items-baseline gap-2 mb-4 relative z-10">
+                                <p id="stat-soles" class="text-2xl font-black mono text-slate-800 tracking-tight leading-none group-hover:text-indigo-950 transition-colors">S/ 0.00</p>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pt-3 border-t border-slate-100 mt-auto relative z-10">
+                                <span class="text-[8px] font-bold uppercase tracking-widest text-slate-400">Inversión CapEx</span>
+                                <span class="text-[8px] font-black uppercase tracking-widest text-emerald-600 flex items-center gap-1.5 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div> Presupuestado
+                                </span>
                             </div>
                         </div>
 
                         <!-- KPI: Capital USD -->
-                        <div class="card-executive p-6 bg-white hover:border-emerald-300 relative overflow-hidden group">
-                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-emerald-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                            <div class="flex justify-between items-start mb-4 relative z-10">
-                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Capital CapEx (USD)</span>
-                                <div class="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner"><i data-lucide="dollar-sign" class="w-4 h-4"></i></div>
+                        <div class="card-executive p-6 bg-white border border-slate-200 flex flex-col justify-between h-full group relative overflow-hidden min-h-[140px] transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl">
+                            <div class="absolute inset-0 bg-dots-pattern opacity-50 pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-slate-100 to-slate-200 group-hover:from-blue-400 group-hover:to-blue-600 transition-colors duration-500"></div>
+                            
+                            <div class="flex justify-between items-start mb-4 relative z-10 pt-1">
+                                <div class="flex flex-col space-y-1">
+                                    <h5 class="text-[9px] font-black uppercase tracking-widest text-slate-400">Capital Autorizado</h5>
+                                    <span class="text-[7px] font-black text-slate-500 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded w-max tracking-widest shadow-sm">EXTRANJERA (USD)</span>
+                                </div>
+                                <div class="w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-blue-50 group-hover:border-blue-200 transition-colors shadow-sm">
+                                    <i data-lucide="dollar-sign" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                </div>
                             </div>
-                            <p id="stat-usd" class="text-2xl font-black mono text-slate-800 relative z-10 tracking-tight">$ 0.00</p>
-                            <div class="mt-4 flex items-center space-x-2 relative z-10">
-                                <span class="status-led info"></span>
-                                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Inversión Extranjera</span>
+                            
+                            <div class="flex items-baseline gap-2 mb-4 relative z-10">
+                                <p id="stat-usd" class="text-2xl font-black mono text-slate-800 tracking-tight leading-none group-hover:text-blue-950 transition-colors">$ 0.00</p>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pt-3 border-t border-slate-100 mt-auto relative z-10">
+                                <span class="text-[8px] font-bold uppercase tracking-widest text-slate-400">Inversión Extranjera</span>
+                                <span class="text-[8px] font-black uppercase tracking-widest text-blue-600 flex items-center gap-1.5 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Asignado
+                                </span>
                             </div>
                         </div>
 
                         <!-- KPI: Alertas Críticas -->
-                        <div class="card-executive p-6 bg-white hover:border-rose-300 relative overflow-hidden group">
-                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-rose-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                            <div class="flex justify-between items-start mb-4 relative z-10">
-                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hitos Críticos</span>
-                                <div class="w-8 h-8 rounded-xl bg-rose-50 border border-rose-100 text-rose-600 flex items-center justify-center shadow-inner led-pulse"><i data-lucide="alert-triangle" class="w-4 h-4"></i></div>
+                        <div class="card-executive p-6 bg-white border border-slate-200 flex flex-col justify-between h-full group relative overflow-hidden min-h-[140px] transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl">
+                            <div class="absolute inset-0 bg-dots-pattern opacity-50 pointer-events-none"></div>
+                            <div class="absolute left-0 top-0 bottom-0 w-[4px] bg-rose-500 shadow-[2px_0_10px_rgba(225,29,72,0.3)]"></div>
+                            
+                            <div class="flex justify-between items-start mb-4 relative z-10 pl-2 pt-1">
+                                <div class="flex flex-col space-y-1">
+                                    <h5 class="text-[9px] font-black uppercase tracking-widest text-slate-400">Hitos Críticos</h5>
+                                    <span class="text-[7px] font-black text-rose-600 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded w-max tracking-widest shadow-sm">ATENCIÓN REQUERIDA</span>
+                                </div>
+                                <div class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center shrink-0 shadow-sm relative z-10">
+                                    <div class="absolute inset-0 border border-rose-100 rounded-lg scale-110 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"></div>
+                                    <span class="relative flex h-2 w-2">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-600 shadow-[0_0_8px_rgba(225,29,72,0.8)]"></span>
+                                    </span>
+                                </div>
                             </div>
-                            <p id="stat-alerts" class="text-2xl font-black mono text-slate-800 relative z-10 tracking-tight">0</p>
-                            <div class="mt-4 flex items-center space-x-2 relative z-10">
-                                <span class="status-led critical"></span>
-                                <span class="text-[9px] font-black uppercase text-rose-500 tracking-widest">Requieren Atención</span>
+                            
+                            <div class="flex items-baseline gap-2 mb-4 relative z-10 pl-2">
+                                <p id="stat-alerts" class="text-2xl font-black mono text-slate-800 tracking-tight leading-none group-hover:text-rose-600 transition-colors">0</p>
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-rose-500">Riesgos</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pt-3 border-t border-slate-100 mt-auto relative z-10 pl-2">
+                                <span class="text-[8px] font-bold uppercase tracking-widest text-slate-400">Estado Operativo</span>
+                                <span class="text-[8px] font-black uppercase tracking-widest text-rose-600 flex items-center gap-1.5 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-100">
+                                    <i data-lucide="shield-alert" class="w-3 h-3"></i> Activo
+                                </span>
                             </div>
                         </div>
 
-                        <!-- KPI: Salud Portafolio -->
-                        <div class="card-executive p-6 gradient-static text-white border-none shadow-xl relative overflow-hidden group">
-                            <div class="absolute inset-0 matrix-bg opacity-10"></div>
-                            <div class="flex justify-between items-start mb-4 relative z-10">
-                                <span class="text-[10px] font-black uppercase tracking-widest text-white/70">Salud Portafolio</span>
-                                <div class="w-8 h-8 rounded-xl bg-white/20 border border-white/30 text-white flex items-center justify-center shadow-inner backdrop-blur-sm"><i data-lucide="activity" class="w-4 h-4"></i></div>
-                            </div>
-                            <p id="stat-progress" class="text-2xl font-black mono relative z-10 tracking-tight">0%</p>
-                            <div class="w-full bg-white/20 h-1.5 rounded-full mt-4 overflow-hidden relative z-10 shadow-inner">
-                                <div id="stat-progress-bar" class="bg-white h-full transition-all duration-700 relative">
-                                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent scan-effect"></div>
+                        <!-- KPI: Salud Portafolio (DINÁMICO SEGÚN BRANDING CORPORATIVO) -->
+                        <div class="card-executive p-6 border-none flex flex-col justify-between h-full relative overflow-hidden group min-h-[140px] shadow-sm transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl" style="background: linear-gradient(135deg, var(--brand-dark), var(--brand-primary));">
+                            <div class="absolute inset-0 bg-grid-pattern-dark opacity-20 pointer-events-none"></div>
+                            <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 blur-[30px] rounded-full group-hover:bg-white/20 transition-all duration-700"></div>
+                            
+                            <div class="flex justify-between items-start mb-3 relative z-10 pt-1">
+                                <div class="flex flex-col space-y-1">
+                                    <h5 class="text-[9px] font-black uppercase tracking-widest text-white/80">Salud Portafolio</h5>
+                                    <span class="text-[7px] font-black text-white bg-black/20 border border-white/20 px-1.5 py-0.5 rounded w-max tracking-widest backdrop-blur-sm">RENDIMIENTO GLOBAL</span>
                                 </div>
+                                <div class="w-8 h-8 rounded-lg bg-black/20 border border-white/20 flex items-center justify-center backdrop-blur-md shadow-sm">
+                                    <i data-lucide="activity" class="w-4 h-4 text-white"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-end gap-2 mb-3 relative z-10">
+                                <p id="stat-progress" class="text-3xl font-black mono text-white tracking-tight leading-none drop-shadow-sm">0%</p>
+                                <span class="text-[8px] font-bold text-white/60 uppercase tracking-widest mb-1">Ejecutado</span>
+                            </div>
+                            
+                            <div class="w-full bg-black/40 h-1.5 rounded-full mt-auto mb-3 overflow-hidden relative z-10 glass-progress border border-white/10">
+                                <div id="stat-progress-bar" class="bg-white h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(255,255,255,0.8)] relative pro-shimmer" style="width: 0%">
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pt-3 border-t border-white/10 mt-auto relative z-10">
+                                <span class="text-[8px] font-bold uppercase tracking-widest text-white/70">Eficiencia Operativa</span>
+                                <span class="text-[8px] font-black uppercase tracking-widest text-white flex items-center gap-1.5 bg-black/20 px-2 py-0.5 rounded-md border border-white/20">
+                                    <span class="relative flex h-1.5 w-1.5">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400 shadow-[0_0_5px_rgba(52,211,153,0.8)]"></span>
+                                    </span> En Curso
+                                </span>
                             </div>
                         </div>
                     </div>
 
                     <!-- TABLA EJECUTIVA DE PROYECTOS -->
-                    <div class="card-executive overflow-hidden hover:shadow-xl bg-white">
-                        <div class="px-8 py-6 border-b border-slate-100 flex justify-between items-center bg-white relative">
-                            <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
-                            <div>
-                                <h3 class="text-sm font-black uppercase tracking-widest text-slate-800 flex items-center gap-2">
-                                    <i data-lucide="bar-chart-2" class="w-5 h-5 text-indigo-500"></i>
-                                    Ejecución de Portafolio
-                                </h3>
-                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Monitoreo en tiempo real por categorización operativa</p>
+                    <div class="card-executive overflow-hidden bg-white border border-slate-200 mt-6 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl rounded-[20px]" style="border-top: 2px solid var(--brand-primary);">
+                        <!-- ENCABEZADO TIPO TERMINAL FINANCIERO (ADAPTATIVO AL BRANDING) -->
+                        <div class="px-6 py-4 flex justify-between items-center relative overflow-hidden" style="background: linear-gradient(135deg, var(--brand-dark), var(--brand-primary));">
+                            <div class="absolute inset-0 bg-grid-pattern-dark opacity-20"></div>
+                            <div class="absolute right-0 top-0 bottom-0 w-1/2" style="background: linear-gradient(to left, rgba(255,255,255,0.05), transparent);"></div>
+                            
+                            <div class="flex items-center gap-3 relative z-10">
+                                <div class="w-8 h-8 rounded-lg flex items-center justify-center shadow-inner" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);">
+                                    <i data-lucide="bar-chart-2" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-[11px] font-black uppercase tracking-widest text-white leading-tight drop-shadow-md">
+                                        Ejecución de Portafolio
+                                    </h3>
+                                    <p class="text-[8px] font-bold text-white/70 uppercase tracking-widest mt-0.5">Sincronización en Tiempo Real</p>
+                                </div>
                             </div>
-                            <div class="flex items-center space-x-3 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
-                                <span class="relative flex h-2.5 w-2.5">
-                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                                </span>
-                                <span class="text-[10px] font-black mono text-slate-600 uppercase" id="total-proyectos-ejecucion">0 proyectos activos</span>
+                            <div class="flex items-center gap-3 backdrop-blur-md px-3 py-1.5 rounded-lg border shadow-inner relative z-10" style="background: rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.1);">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="relative flex h-1.5 w-1.5">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500 shadow-[0_0_5px_rgba(52,211,153,0.8)]"></span>
+                                    </span>
+                                    <span class="text-[8px] font-black uppercase tracking-widest text-emerald-400 drop-shadow-sm">LIVE</span>
+                                </div>
+                                <div class="w-px h-3 bg-white/20"></div>
+                                <span class="text-[9px] font-black mono text-white/90 uppercase tracking-widest" id="total-proyectos-ejecucion">0 Activos</span>
                             </div>
                         </div>
-                        <div class="overflow-x-auto">
+                        
+                        <div class="overflow-x-auto bg-slate-50/30 pb-8 pt-2 px-2">
                             <table class="w-full text-left border-collapse">
-                                <thead class="bg-slate-50/80 text-[10px] font-black uppercase text-slate-500 border-b border-slate-200">
+                                <thead class="bg-transparent border-b border-slate-200">
                                     <tr>
-                                        <th class="px-8 py-4 tracking-wider">Activo / Proyecto</th>
-                                        <th class="px-6 py-4 tracking-wider">Presupuesto</th>
-                                        <th class="px-6 py-4 tracking-wider">Prioridad</th>
-                                        <th class="px-6 py-4 tracking-wider">Responsable</th>
-                                        <th class="px-6 py-4 tracking-wider text-center">Avance</th>
-                                        <th class="px-8 py-4 tracking-wider text-right">Acciones</th>
+                                        <th class="px-6 py-4 text-[9px] font-black uppercase text-slate-400 tracking-widest">Activo / Proyecto</th>
+                                        <th class="px-6 py-4 text-[9px] font-black uppercase text-slate-400 tracking-widest">Presupuesto</th>
+                                        <th class="px-6 py-4 text-[9px] font-black uppercase text-slate-400 tracking-widest">Prioridad</th>
+                                        <th class="px-6 py-4 text-[9px] font-black uppercase text-slate-400 tracking-widest">Responsable</th>
+                                        <th class="px-6 py-4 text-[9px] font-black uppercase text-slate-400 tracking-widest text-center">Avance Gral.</th>
+                                        <th class="px-6 py-4 text-[9px] font-black uppercase text-slate-400 tracking-widest text-right">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="dashboard-table" class="divide-y divide-slate-100"></tbody>
@@ -1345,94 +1478,205 @@
                 </section>
 
                 <!-- VISTA ANALYTICS -->
-                <section id="view-analytics" class="hidden space-y-10 animate-view pb-20">
+                <section id="view-analytics" class="hidden space-y-8 animate-view pb-24 w-full xl:px-4 pt-4">
                     <div class="flex items-center justify-between mb-2">
-                        <div>
-                            <h3 class="text-xl font-black text-slate-800 uppercase">Análisis Estadístico</h3>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Métricas en tiempo real</p>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl flex items-center justify-center text-indigo-600 border border-indigo-100 scan-effect">
+                                <i data-lucide="bar-chart-big" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-black text-slate-800 uppercase tracking-tight">Análisis Estadístico</h3>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Inteligencia de Negocios (BI)</p>
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-3 glass-card p-2 rounded-2xl border border-white/20 shadow-sm hover:shadow-md transition-all">
-                            <div class="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                            <span class="text-[10px] font-black uppercase text-slate-600 hidden sm:inline">Datos Actualizados</span>
+                        <div class="flex items-center space-x-3 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
+                            <span class="relative flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                            </span>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-600">Sync en Tiempo Real</span>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 place-items-center">
-                        <div class="metric-card gradient-blue hover:shadow-xl">
-                            <span class="eng-label text-white/70">Inversión CapEx Total</span>
-                            <p id="bi-stat-capex" class="metric-value text-white mt-2">$ 285,000</p>
-                            <p class="text-[9px] font-bold text-white/60 uppercase mt-4">Calculado según filtro</p>
-                            <div class="mt-4 flex items-center space-x-2">
-                                <span class="status-led success"></span>
-                                <span class="text-[10px] font-mono text-white/80 font-bold">+12.5%</span>
+                    <!-- TARJETAS KPI ANALÍTICA (SIMÉTRICAS) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        
+                        <!-- KPI 1: Inversión Total (Dinámico con Branding) -->
+                        <div class="metric-card border-none shadow-md group" style="background: linear-gradient(135deg, var(--brand-dark), var(--brand-primary));">
+                            <div class="absolute inset-0 bg-grid-pattern-dark opacity-20 pointer-events-none"></div>
+                            <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 blur-[30px] rounded-full group-hover:bg-white/20 transition-all duration-700"></div>
+                            
+                            <div class="relative z-10 flex justify-between items-start mb-4">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-white/80">Inversión CapEx</span>
+                                <div class="w-8 h-8 rounded-lg bg-black/20 border border-white/20 flex items-center justify-center backdrop-blur-md shadow-sm">
+                                    <i data-lucide="dollar-sign" class="w-4 h-4 text-white"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="relative z-10 flex-1 flex flex-col justify-end mt-2">
+                                <p id="bi-stat-capex" class="text-3xl font-black mono text-white tracking-tight drop-shadow-md leading-none mb-4">$ 0</p>
+                                <div class="flex justify-between items-center pt-4 border-t border-white/10">
+                                    <span class="text-[8px] font-bold text-white/60 uppercase tracking-widest">Total Portafolio</span>
+                                    <span class="text-[9px] font-black mono text-emerald-400 flex items-center gap-1.5 bg-black/20 px-2 py-0.5 rounded border border-white/10 backdrop-blur-sm">
+                                        <i data-lucide="trending-up" class="w-3 h-3"></i> Filtro Activo
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="metric-card gradient-green hover:shadow-xl">
-                            <span class="eng-label text-white/70">Eficiencia de Hitos</span>
-                            <p id="bi-stat-milestones" class="metric-value text-white mt-2">78%</p>
-                            <p class="text-[9px] font-bold text-white/60 uppercase mt-4">Cumplimiento de tareas</p>
-                            <div class="mt-4 flex items-center space-x-2">
-                                <span class="status-led info"></span>
-                                <span class="text-[10px] font-mono text-white/80 font-bold">Meta: 85%</span>
+                        <!-- KPI 2: Eficiencia de Hitos -->
+                        <div class="metric-card bg-white group hover:border-emerald-300">
+                            <div class="absolute inset-0 bg-dots-pattern opacity-50 pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                            <div class="relative z-10 flex justify-between items-start mb-4">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Eficiencia Hitos</span>
+                                <div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center shadow-sm group-hover:bg-emerald-500 group-hover:border-emerald-500 transition-all duration-300">
+                                    <i data-lucide="target" class="w-4 h-4 text-emerald-500 group-hover:text-white transition-colors"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="relative z-10 flex-1 flex flex-col justify-end mt-2">
+                                <p id="bi-stat-milestones" class="text-3xl font-black mono text-slate-800 tracking-tight leading-none mb-4 group-hover:text-emerald-600 transition-colors">0%</p>
+                                <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                                    <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Cumplimiento Tareas</span>
+                                    <span class="text-[9px] font-black mono text-slate-500 flex items-center gap-1 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">
+                                        Meta: 85%
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="metric-card hover:border-indigo-200">
-                            <span class="eng-label">Salud del Proyecto</span>
-                            <p id="bi-stat-health" class="metric-value text-indigo-600 mt-2">82%</p>
-                            <div class="w-full bg-slate-100 h-1.5 rounded-full mt-4">
-                                <div id="bi-health-bar" class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full rounded-full transition-all duration-1000" style="width: 82%"></div>
+                        <!-- KPI 3: Salud del Proyecto -->
+                        <div class="metric-card bg-white group hover:border-indigo-300">
+                            <div class="absolute inset-0 bg-dots-pattern opacity-50 pointer-events-none"></div>
+                            
+                            <div class="relative z-10 flex justify-between items-start mb-4">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Salud Ejecución</span>
+                                <div class="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center shadow-sm group-hover:bg-indigo-600 group-hover:border-indigo-600 transition-all duration-300">
+                                    <i data-lucide="activity" class="w-4 h-4 text-indigo-500 group-hover:text-white transition-colors"></i>
+                                </div>
                             </div>
-                            <div class="mt-4 flex items-center space-x-2">
-                                <span class="status-led success"></span>
-                                <span class="text-[10px] font-mono text-slate-600 font-bold">Óptimo</span>
+                            
+                            <div class="relative z-10 flex-1 flex flex-col justify-end mt-2">
+                                <div class="flex items-end gap-3 mb-2">
+                                    <p id="bi-stat-health" class="text-3xl font-black mono text-slate-800 tracking-tight leading-none group-hover:text-indigo-600 transition-colors">0%</p>
+                                </div>
+                                <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden shadow-inner mb-4">
+                                    <div id="bi-health-bar" class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full rounded-full transition-all duration-1000 pro-shimmer" style="width: 0%"></div>
+                                </div>
+                                <div class="flex justify-between items-center pt-3 border-t border-slate-100">
+                                    <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Avance Promedio</span>
+                                    <span class="text-[9px] font-black mono text-indigo-600 flex items-center gap-1.5 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></div> Óptimo
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="metric-card hover:border-purple-200">
-                            <span class="eng-label">ROI Estimado (Avg)</span>
-                            <p id="bi-stat-roi" class="metric-value text-purple-600 mt-2">2.4x</p>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase mt-4">Retorno s/ingeniería</p>
-                            <div class="mt-4 flex items-center space-x-2">
-                                <span class="status-led info"></span>
-                                <span class="text-[10px] font-mono text-slate-600 font-bold">Proy. 2.5x</span>
+                        <!-- KPI 4: ROI / Retorno -->
+                        <div class="metric-card bg-white group hover:border-purple-300">
+                            <div class="absolute inset-0 bg-dots-pattern opacity-50 pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-purple-400 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                            <div class="relative z-10 flex justify-between items-start mb-4">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">ROI Estimado (Avg)</span>
+                                <div class="w-8 h-8 rounded-lg bg-purple-50 border border-purple-100 flex items-center justify-center shadow-sm group-hover:bg-purple-600 group-hover:border-purple-600 transition-all duration-300">
+                                    <i data-lucide="line-chart" class="w-4 h-4 text-purple-600 group-hover:text-white transition-colors"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="relative z-10 flex-1 flex flex-col justify-end mt-2">
+                                <p id="bi-stat-roi" class="text-3xl font-black mono text-slate-800 tracking-tight leading-none mb-4 group-hover:text-purple-600 transition-colors">2.4x</p>
+                                <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                                    <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Retorno s/Ingeniería</span>
+                                    <span class="text-[9px] font-black mono text-slate-500 flex items-center gap-1 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">
+                                        Proy: 2.5x
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="card-executive p-8 flex flex-col hover:border-indigo-200">
-                            <div class="flex justify-between items-center mb-8 shrink-0">
-                                <h4 class="eng-label mb-0">Curva S: Avance Acumulado</h4>
-                                <div class="px-3 py-1 bg-slate-50 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest border border-slate-100">Tendencia</div>
+                    <!-- GRÁFICOS MATRICIALES (SIMÉTRICOS Y ESTRUCTURADOS) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
+                        
+                        <!-- Gráfico 1 -->
+                        <div class="card-executive flex flex-col hover:border-indigo-300 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl overflow-hidden rounded-[20px] bg-white group">
+                            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center shadow-sm text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                        <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-800">Curva S: Avance Acumulado</h4>
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Desempeño en el tiempo</p>
+                                    </div>
+                                </div>
+                                <div class="px-3 py-1 bg-white rounded-lg text-[9px] font-black text-indigo-600 uppercase tracking-widest border border-slate-200 shadow-sm hidden sm:block">Tendencia Histórica</div>
                             </div>
-                            <div class="h-[350px] w-full relative flex-1"><canvas id="chart-s-curve"></canvas></div>
+                            <div class="p-6 h-[350px] w-full relative flex-1">
+                                <canvas id="chart-s-curve"></canvas>
+                            </div>
                         </div>
 
-                        <div class="card-executive p-8 flex flex-col hover:border-indigo-200">
-                            <div class="flex justify-between items-center mb-8 shrink-0">
-                                <h4 class="eng-label mb-0">Inversión por Categoría</h4>
-                                <div class="px-3 py-1 bg-emerald-50 rounded-lg text-[9px] font-black text-emerald-600 uppercase tracking-widest border border-emerald-100">CAPEX</div>
+                        <!-- Gráfico 2 -->
+                        <div class="card-executive flex flex-col hover:border-emerald-300 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl overflow-hidden rounded-[20px] bg-white group">
+                            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center shadow-sm text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                        <i data-lucide="pie-chart" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-800">Inversión por Categoría</h4>
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Distribución Presupuestal</p>
+                                    </div>
+                                </div>
+                                <div class="px-3 py-1 bg-white rounded-lg text-[9px] font-black text-emerald-600 uppercase tracking-widest border border-slate-200 shadow-sm hidden sm:block">Distribución CAPEX</div>
                             </div>
-                            <div class="h-[350px] w-full relative flex-1"><canvas id="chart-pie-capex"></canvas></div>
+                            <div class="p-6 h-[350px] w-full relative flex-1">
+                                <canvas id="chart-pie-capex"></canvas>
+                            </div>
                         </div>
 
-                        <div class="card-executive p-8 flex flex-col hover:border-indigo-200">
-                            <div class="flex justify-between items-center mb-8 shrink-0">
-                                <h4 class="eng-label mb-0">Eficiencia Operativa</h4>
-                                <div class="px-3 py-1 bg-rose-50 rounded-lg text-[9px] font-black text-rose-600 uppercase tracking-widest border border-rose-100">Rendimiento</div>
+                        <!-- Gráfico 3 -->
+                        <div class="card-executive flex flex-col hover:border-rose-300 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl overflow-hidden rounded-[20px] bg-white group">
+                            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center shadow-sm text-rose-600 group-hover:bg-rose-600 group-hover:text-white transition-colors">
+                                        <i data-lucide="radar" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-800">Eficiencia Operativa</h4>
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Métricas de Evaluación</p>
+                                    </div>
+                                </div>
+                                <div class="px-3 py-1 bg-white rounded-lg text-[9px] font-black text-rose-600 uppercase tracking-widest border border-slate-200 shadow-sm hidden sm:block">Rendimiento</div>
                             </div>
-                            <div class="h-[350px] w-full relative flex-1"><canvas id="chart-radar"></canvas></div>
+                            <div class="p-6 h-[350px] w-full relative flex-1">
+                                <canvas id="chart-radar"></canvas>
+                            </div>
                         </div>
 
-                        <div class="card-executive p-8 flex flex-col hover:border-indigo-200">
-                            <div class="flex justify-between items-center mb-8 shrink-0">
-                                <h4 class="eng-label mb-0">Balance de Recursos</h4>
-                                <div class="px-3 py-1 bg-indigo-50 rounded-lg text-[9px] font-black text-indigo-600 uppercase tracking-widest border border-indigo-100">Carga</div>
+                        <!-- Gráfico 4 -->
+                        <div class="card-executive flex flex-col hover:border-amber-300 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl overflow-hidden rounded-[20px] bg-white group">
+                            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center shadow-sm text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                                        <i data-lucide="users" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-800">Balance de Recursos</h4>
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Carga de trabajo por disciplina</p>
+                                    </div>
+                                </div>
+                                <div class="px-3 py-1 bg-white rounded-lg text-[9px] font-black text-amber-600 uppercase tracking-widest border border-slate-200 shadow-sm hidden sm:block">Carga Laboral</div>
                             </div>
-                            <div class="h-[350px] w-full relative flex-1"><canvas id="chart-polar-resources"></canvas></div>
+                            <div class="p-6 h-[350px] w-full relative flex-1">
+                                <canvas id="chart-polar-resources"></canvas>
+                            </div>
                         </div>
+
                     </div>
                 </section>
 
@@ -1540,16 +1784,18 @@
     <div id="project-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-xl hidden flex items-center justify-center z-50 p-6">
         <div class="bg-white w-full max-w-6xl max-h-[95vh] rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden animate-view hover:shadow-3xl transition-all">
             <div class="px-10 py-6 border-b flex justify-between items-center bg-white shrink-0">
-                <div class="flex items-center space-x-5">
+                <div class="flex items-start space-x-5" style="max-width: calc(100% - 12rem);">
                     <div class="w-12 h-12 gradient-static rounded-2xl flex items-center justify-center text-white shadow-lg scan-effect shrink-0">
                         <i data-lucide="layers" class="w-6 h-6"></i>
                     </div>
-                    <div>
-                        <h2 class="text-lg font-black tracking-tight uppercase text-slate-800">Ficha de Ingeniería</h2>
-                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Gestión de Proyecto</p>
+                    <div class="min-w-0" style="flex: 1;">
+                        <h2 class="text-lg font-black tracking-tight uppercase text-slate-800 break-words" title="Ficha de Ingeniería">Ficha de Ingeniería</h2>
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest break-words">Gestión de Proyecto</p>
                     </div>
                 </div>
-                <button onclick="closeProjectModal()" class="w-12 h-12 hover:bg-slate-50 rounded-full flex items-center justify-center text-slate-800 border transition-all hover:border-indigo-200 hover:scale-110 active:scale-95"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <div class="flex items-center space-x-2 shrink-0 ml-4">
+                    <button onclick="closeProjectModal()" class="w-12 h-12 hover:bg-slate-50 rounded-full flex items-center justify-center text-slate-800 border transition-all hover:border-indigo-200 hover:scale-110 active:scale-95"><i data-lucide="x" class="w-6 h-6"></i></button>
+                </div>
             </div>
             <form id="project-form" class="flex-1 overflow-y-auto p-10 custom-scrollbar space-y-10 bg-gradient-to-b from-slate-50/30 to-transparent">
                 <input type="hidden" id="edit-id">
@@ -1886,8 +2132,10 @@
                             if (proj && proj.files) {
                                 const fileRef = proj.files.find(f => f.name === task.file.name);
                                 if (fileRef) {
+                                    // MEJORA: Guardar el ID real de Drive y el enlace directo
                                     fileRef.driveId = driveFile.id;
-                                    fileRef.viewLink = driveFile.viewLink;
+                                    fileRef.directLink = driveFile.directLink; // Guardar el enlace directo
+                                    fileRef.viewLink = driveFile.viewLink; // Mantener por compatibilidad
                                     fileRef.viewerUrl = driveFile.viewerUrl;
                                     fileRef.isUploaded = true;
                                     delete fileRef.fileObj; // Liberar memoria
@@ -1900,6 +2148,7 @@
                                 const fileRef = prop.files.find(f => f.name === task.file.name);
                                 if (fileRef) {
                                     fileRef.driveId = driveFile.id;
+                                    fileRef.directLink = driveFile.directLink;
                                     fileRef.viewLink = driveFile.viewLink;
                                     fileRef.viewerUrl = driveFile.viewerUrl;
                                     fileRef.isUploaded = true;
@@ -1931,7 +2180,7 @@
             }, 3000);
         };
 
-        // --- FUNCIÓN PARA SUBIR ARCHIVO A DRIVE (MÁS LIMPIA Y RÁPIDA) ---
+        // --- FUNCIÓN PARA SUBIR ARCHIVO A DRIVE (MEJORADA PARA CAPTURAR EL ID) ---
         async function uploadFileToAppScript(file, projectName, folderName) {
             return new Promise((resolve, reject) => {
                 const localBlobUrl = URL.createObjectURL(file);
@@ -1939,7 +2188,16 @@
 
                 reader.onload = async function(event) {
                     const base64Content = event.target.result.split(',')[1];
-                    if (!base64Content) return resolve({ name: file.name, id: 'local-' + Date.now(), viewLink: localBlobUrl, blob: file });
+                    if (!base64Content) {
+                        // Fallback a local si no hay contenido
+                        return resolve({ 
+                            name: file.name, 
+                            id: 'local-' + Date.now(), 
+                            viewLink: localBlobUrl, 
+                            directLink: localBlobUrl, // Mismo enlace para fallback
+                            blob: file 
+                        });
+                    }
 
                     const payloadData = JSON.stringify({
                         projectName: projectName || 'General',
@@ -1953,26 +2211,69 @@
                         const response = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: payloadData });
                         if (response.ok) {
                             const responseData = await response.text();
-                            let driveLink = localBlobUrl, driveId = 'drive-' + Date.now();
+                            let driveId = null;
+                            let directLink = localBlobUrl; // Fallback
+                            let viewLink = localBlobUrl;
                             
-                            if (responseData.startsWith('http')) {
-                                driveLink = responseData;
-                                const match = responseData.match(/\/d\/(.*?)\//);
-                                if(match && match[1]) driveId = match[1];
-                            } else {
-                                try { 
-                                    const json = JSON.parse(responseData); 
-                                    if (json.url) driveLink = json.url; 
-                                    if (json.id) driveId = json.id;
-                                } catch(e){}
+                            // --- MEJORA: Extraer ID y construir enlace DIRECTO ---
+                            // Intentar parsear como JSON primero
+                            try {
+                                const jsonResponse = JSON.parse(responseData);
+                                if (jsonResponse.id) {
+                                    driveId = jsonResponse.id;
+                                }
+                                if (jsonResponse.url) {
+                                    viewLink = jsonResponse.url; // URL de vista
+                                }
+                            } catch (e) {
+                                // No es JSON, puede ser una URL directa
+                                if (responseData.startsWith('http')) {
+                                    viewLink = responseData;
+                                    // Intentar extraer ID de la URL
+                                    const match = responseData.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                                    if (match && match[1]) {
+                                        driveId = match[1];
+                                    }
+                                }
                             }
-                            resolve({ name: file.name, id: driveId, driveId: driveId, mimeType: file.type, viewLink: driveLink, viewerUrl: getViewerUrl(file, file.type) });
+
+                            // Si tenemos ID, construir el enlace DIRECTO
+                            if (driveId && driveId.length > 15) { // IDs de Drive suelen ser largos
+                                directLink = `https://drive.google.com/file/d/${driveId}/view`;
+                            } else {
+                                // Si no hay ID, intentar extraer de viewLink una vez más
+                                if (viewLink && viewLink.includes('drive.google.com')) {
+                                    const match = viewLink.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                                    if (match && match[1]) {
+                                        driveId = match[1];
+                                        directLink = `https://drive.google.com/file/d/${driveId}/view`;
+                                    }
+                                }
+                            }
+
+                            resolve({ 
+                                name: file.name, 
+                                id: driveId || 'drive-blind-' + Date.now(), 
+                                driveId: driveId,
+                                mimeType: file.type, 
+                                viewLink: viewLink,
+                                directLink: directLink, // NUEVO: Enlace directo garantizado
+                                viewerUrl: getViewerUrl(file, file.type) 
+                            });
                         } else {
-                            throw new Error("Respuesta bloqueada");
+                            throw new Error("Respuesta no exitosa del servidor");
                         }
                     } catch (error) {
-                        console.warn("CORS bloqueó la lectura, asumiendo éxito en Drive.");
-                        resolve({ name: file.name, id: 'drive-blind-' + Date.now(), mimeType: file.type, viewLink: localBlobUrl, viewerUrl: getViewerUrl(file, file.type) });
+                        console.warn("Error en subida, asumiendo éxito local.", error);
+                        // Fallback: usar enlace local
+                        resolve({ 
+                            name: file.name, 
+                            id: 'drive-blind-' + Date.now(), 
+                            mimeType: file.type, 
+                            viewLink: localBlobUrl,
+                            directLink: localBlobUrl,
+                            viewerUrl: getViewerUrl(file, file.type) 
+                        });
                     }
                 };
                 reader.onerror = () => reject(new Error("Error leyendo archivo local"));
@@ -1992,15 +2293,22 @@
             }
         }
 
-        // --- FUNCIÓN PARA ABRIR ENLACE DIRECTO EN GOOGLE DRIVE ---
+        // --- FUNCIÓN PARA ABRIR ENLACE DIRECTO EN GOOGLE DRIVE (MEJORADA) ---
         window.openDriveLink = function(fileData) {
             if (!fileData) return;
             
-            // 1. Extraer ID Real de Google Drive
+            // 1. ESTRATEGIA PRINCIPAL: Usar el enlace directo guardado (si existe)
+            if (fileData.directLink && fileData.directLink.includes('drive.google.com')) {
+                window.open(fileData.directLink, '_blank');
+                notify(`Abriendo archivo en Drive...`, 'success');
+                return;
+            }
+
+            // 2. Segunda estrategia: Intentar obtener un ID de Google Drive válido
             let extractedId = fileData.driveId || fileData.id || fileData.fileId;
             let hasRealDriveId = extractedId && String(extractedId).length > 15 && !String(extractedId).startsWith('local-') && !String(extractedId).startsWith('drive-blind-');
 
-            // Intento de extraer ID de un viewLink válido
+            // 3. Si no tenemos ID, intentar extraerlo de la URL guardada
             if (!hasRealDriveId && fileData.viewLink && fileData.viewLink.includes('drive.google.com')) {
                 const match = fileData.viewLink.match(/\/d\/([a-zA-Z0-9_-]+)/);
                 if (match && match[1]) {
@@ -2009,25 +2317,28 @@
                 }
             }
 
-            // 2. Abrir enlace DIRECTO a Drive si tenemos el ID (Este es el enlace nativo y directo)
+            // 4. Si tenemos un ID real, construir y abrir el enlace directo
             if (hasRealDriveId) {
-                let urlToOpen = `https://drive.google.com/file/d/${extractedId}/view`;
-                window.open(urlToOpen, '_blank');
-                notify(`Abriendo archivo directo...`, 'success');
+                let directUrl = `https://drive.google.com/file/d/${extractedId}/view`;
+                window.open(directUrl, '_blank');
+                notify(`Abriendo archivo en Drive...`, 'success');
                 return;
             }
 
-            // 3. Fallback si tiene un enlace web válido en la nube
+            // 5. FALLBACK: Si tenemos un enlace web que parece de Drive, lo usamos
             if (fileData.viewLink && fileData.viewLink.includes('drive.google.com')) {
                 window.open(fileData.viewLink, '_blank');
                 return;
             }
 
-            // 4. Si el ID no se pudo guardar en el pasado por bloqueos de seguridad del navegador,
-            // forzamos a Google Drive a filtrar y mostrar única y exactamente ese archivo en pantalla.
-            const exactSearchUrl = `https://drive.google.com/drive/search?q=${encodeURIComponent('"' + fileData.name + '"')}`;
-            window.open(exactSearchUrl, '_blank');
-            notify("Redirigiendo a la ubicación del archivo...", "info");
+            // 6. ÚLTIMO RECURSO: Intentar una búsqueda exacta en Drive con el nombre del archivo
+            if (fileData.name) {
+                const searchUrl = `https://drive.google.com/drive/search?q=${encodeURIComponent(fileData.name)}`;
+                window.open(searchUrl, '_blank');
+                notify("No se encontró enlace directo. Redirigiendo a búsqueda...", "info");
+            } else {
+                notify("No se pudo determinar la ubicación del archivo", "error");
+            }
         };
 
         // Handlers para abrir enlaces directos
@@ -2512,87 +2823,87 @@
             TYPE_CATEGORIES.forEach(cat => {
                 const projectsInCat = organized[cat.key];
                 if(projectsInCat.length > 0) {
-                    // Cabecera de Categoría (Mejorada visualmente)
+                    // Cabecera de Categoría
                     tableHTML += `
-                        <tr class="bg-slate-100/50 border-y border-slate-200 group/cat">
-                            <td colspan="6" class="px-8 py-3">
+                        <tr class="group/cat bg-slate-50/50">
+                            <td colspan="6" class="px-6 py-4">
                                 <div class="flex items-center">
-                                    <div class="w-6 h-6 rounded bg-white border border-slate-200 flex items-center justify-center mr-3 shadow-sm group-hover/cat:border-indigo-300 transition-colors">
-                                        <i data-lucide="folder-tree" class="w-3 h-3 text-indigo-600"></i>
+                                    <div class="w-6 h-6 rounded-md bg-indigo-50 border border-indigo-100 flex items-center justify-center mr-3 shadow-sm group-hover/cat:bg-indigo-600 group-hover/cat:border-indigo-600 transition-colors duration-300">
+                                        <i data-lucide="folder-tree" class="w-3 h-3 text-indigo-600 group-hover/cat:text-white transition-colors"></i>
                                     </div>
-                                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-700">
+                                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-800">
                                         ${cat.label}
                                     </span>
-                                    <span class="ml-3 text-[9px] font-bold text-slate-400 bg-white px-1.5 py-0.5 rounded border border-slate-200">${projectsInCat.length}</span>
+                                    <div class="ml-4 h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent"></div>
+                                    <span class="ml-4 text-[8px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100 shadow-sm uppercase tracking-widest">${projectsInCat.length} Ítems</span>
                                 </div>
                             </td>
                         </tr>`;
                         
-                    // Filas de Proyectos (Rediseñadas manteniendo los puntos parpadeantes)
+                    // Filas de Proyectos
                     projectsInCat.forEach(p => {
                         const total = p.budget.reduce((a, b) => a + b.amount, 0);
                         const initials = p.owner ? p.owner.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase() : 'NA';
                         
-                        // Configuración de Prioridad
                         const priorityConfig = {
-                            'urgente': { color: 'text-rose-700', bg: 'bg-rose-50', border: 'border-rose-200', dot: 'bg-rose-500' },
-                            'alta': { color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200', dot: 'bg-amber-500' },
-                            'normal': { color: 'text-indigo-700', bg: 'bg-indigo-50', border: 'border-indigo-200', dot: 'bg-indigo-500' }
+                            'urgente': { color: 'text-rose-700', bg: 'bg-rose-50', border: 'border-rose-200', dot: 'bg-rose-500', glow: 'shadow-[0_0_5px_rgba(244,63,94,0.5)]' },
+                            'alta': { color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200', dot: 'bg-amber-500', glow: 'shadow-[0_0_5px_rgba(245,158,11,0.5)]' },
+                            'normal': { color: 'text-indigo-700', bg: 'bg-indigo-50', border: 'border-indigo-200', dot: 'bg-indigo-500', glow: 'shadow-[0_0_5px_rgba(99,102,241,0.5)]' }
                         };
                         const pConf = priorityConfig[p.priority] || priorityConfig['normal'];
 
                         tableHTML += `
-                        <tr draggable="true" ondragstart="dragRowStart(event, ${p.id})" ondragover="dragRowOver(event)" ondragleave="dragRowLeave(event)" ondrop="dropRow(event, ${p.id})" ondragend="dragRowEnd(event)" class="hover:bg-indigo-50/40 cursor-pointer group/row transition-all bg-white" onclick="openDetail(${p.id})">
-                            <td class="px-8 py-4">
-                                <div class="flex flex-col">
-                                    <span class="font-black text-slate-800 uppercase text-[12px] group-hover/row:text-indigo-600 transition-colors leading-tight mb-1">${p.name}</span>
-                                    <span class="text-[10px] mono font-black text-blue-700 bg-blue-50 group-hover/row:bg-white group-hover/row:text-blue-800 group-hover/row:border-blue-300 px-2 py-0.5 rounded w-max border border-blue-200 shadow-sm transition-all">${p.code || 'S/C'}</span>
+                        <tr draggable="true" ondragstart="dragRowStart(event, ${p.id})" ondragover="dragRowOver(event)" ondragleave="dragRowLeave(event)" ondrop="dropRow(event, ${p.id})" ondragend="dragRowEnd(event)" class="hover:bg-white cursor-pointer group/row transition-all duration-500 transform bg-white border-b border-slate-100 relative hover:z-50 hover:shadow-xl hover:-translate-y-2" onclick="openDetail(${p.id})">
+                            <td class="px-6 py-4 relative max-w-[300px] min-w-[200px]">
+                                <div class="absolute left-0 top-0 bottom-0 w-[3px] bg-indigo-500 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"></div>
+                                <div class="flex flex-col space-y-1.5 pl-2">
+                                    <span class="font-bold text-slate-800 uppercase text-[11px] group-hover/row:text-indigo-700 transition-colors leading-snug whitespace-normal break-words tracking-tight">${p.name}</span>
+                                    <span class="text-[8px] mono font-black text-indigo-600 bg-indigo-50/80 group-hover/row:bg-indigo-100 px-1.5 py-0.5 rounded w-max border border-indigo-100 transition-all tracking-wider">${p.code || 'S/C'}</span>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex flex-col">
-                                    <span class="text-[12px] mono font-black ${p.currency==='PEN' ? 'text-slate-700' : 'text-emerald-600'}">${p.currency==='PEN'?'S/':'$'} ${total.toLocaleString('en-US')}</span>
-                                    <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">CapEx Total</span>
+                                    <span class="text-[11px] mono font-black ${p.currency==='PEN' ? 'text-slate-700' : 'text-emerald-700'}">${p.currency==='PEN'?'S/':'$'} ${total.toLocaleString('en-US')}</span>
+                                    <span class="text-[7px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">CapEx Total</span>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <div class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg border ${pConf.bg} ${pConf.border} shadow-sm">
-                                    <!-- AQUI SE MANTIENE EL PUNTO PARPADEANTE -->
-                                    <span class="relative flex h-2 w-2">
-                                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full ${pConf.dot} opacity-75"></span>
-                                      <span class="relative inline-flex rounded-full h-2 w-2 ${pConf.dot}"></span>
+                                <div class="inline-flex items-center gap-2 px-2 py-1 rounded border ${pConf.bg} ${pConf.border} shadow-sm bg-white">
+                                    <span class="relative flex h-1.5 w-1.5">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full ${pConf.dot} opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-1.5 w-1.5 ${pConf.dot} ${pConf.glow}"></span>
                                     </span>
-                                    <span class="text-[9px] font-black uppercase tracking-widest ${pConf.color}">${p.priority}</span>
+                                    <span class="text-[8px] font-black uppercase tracking-widest ${pConf.color}">${p.priority}</span>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 border border-slate-200 flex items-center justify-center text-[10px] font-black shrink-0 group-hover/row:bg-indigo-100 group-hover/row:text-indigo-700 group-hover/row:border-indigo-200 transition-colors shadow-inner">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-600 border border-slate-200 flex items-center justify-center text-[9px] font-black shrink-0 group-hover/row:bg-indigo-600 group-hover/row:text-white group-hover/row:border-indigo-600 transition-colors duration-300 shadow-sm">
                                         ${initials}
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-[10px] font-black text-slate-700 uppercase truncate max-w-[120px] leading-tight">${p.owner || 'No asignado'}</span>
-                                        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Project Manager</span>
+                                        <span class="text-[9px] font-black text-slate-800 uppercase truncate max-w-[120px] leading-tight">${p.owner || 'No asignado'}</span>
+                                        <span class="text-[7px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Project Manager</span>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <div class="flex flex-col gap-1.5 w-32 mx-auto">
+                                <div class="flex flex-col gap-1.5 w-28 mx-auto">
                                     <div class="flex justify-between items-end">
-                                        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Avance</span>
-                                        <span class="text-[11px] font-black mono text-indigo-600">${p.progress}%</span>
+                                        <span class="text-[7px] font-bold text-slate-400 uppercase tracking-widest">Avance</span>
+                                        <span class="text-[10px] font-black mono ${p.progress == 100 ? 'text-emerald-600' : 'text-indigo-600'} drop-shadow-sm">${p.progress}%</span>
                                     </div>
-                                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden shadow-inner">
-                                        <div class="h-full bg-gradient-to-r ${p.progress == 100 ? 'from-emerald-500 to-emerald-400' : 'from-indigo-600 to-indigo-400'} transition-all duration-700 relative" style="width:${p.progress}%;">
-                                            <div class="absolute inset-0 bg-white/20" style="background-image: linear-gradient(45deg, rgba(255,255,255,.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.15) 50%, rgba(255,255,255,.15) 75%, transparent 75%, transparent); background-size: 1rem 1rem;"></div>
+                                    <!-- ANIMACIÓN SHIMMER PREMIUM Y BARRA FINA -->
+                                    <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden shadow-inner relative">
+                                        <div class="h-full rounded-full bg-gradient-to-r ${p.progress == 100 ? 'from-emerald-500 to-emerald-400' : 'from-indigo-600 via-blue-500 to-indigo-400'} transition-all duration-1000 relative pro-shimmer" style="width:${p.progress}%;">
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-8 py-4 text-right">
-                                <div class="flex justify-end space-x-2 opacity-50 group-hover/row:opacity-100 transition-opacity">
-                                    <button onclick="event.stopPropagation(); editProject(${p.id})" class="p-2.5 bg-white text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-200 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-110 active:scale-95" title="Editar Proyecto"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
-                                    <button onclick="event.stopPropagation(); deleteProject(${p.id})" class="p-2.5 bg-white text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-110 active:scale-95" title="Eliminar Proyecto"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex justify-end space-x-2 transition-all duration-300">
+                                    <button onclick="event.stopPropagation(); editProject(${p.id})" class="p-2 bg-slate-50 text-slate-500 hover:text-indigo-600 hover:bg-indigo-100 border border-slate-200 hover:border-indigo-300 rounded-lg transition-all shadow-sm hover:shadow-md hover:-translate-y-1 active:scale-95" title="Editar Proyecto"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                                    <button onclick="event.stopPropagation(); deleteProject(${p.id})" class="p-2 bg-slate-50 text-rose-500 hover:text-rose-600 hover:bg-rose-100 border border-slate-200 hover:border-rose-300 rounded-lg transition-all shadow-sm hover:shadow-md hover:-translate-y-1 active:scale-95" title="Eliminar Proyecto"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>`;
@@ -2600,7 +2911,7 @@
                 }
             });
 
-            table.innerHTML = tableHTML || '<tr><td colspan="6" class="p-20 text-center flex flex-col items-center justify-center text-slate-300 gap-3"><i data-lucide="inbox" class="w-10 h-10 opacity-50"></i><span class="uppercase font-black tracking-widest text-xs">Sin Proyectos en esta vista</span></td></tr>';
+            table.innerHTML = tableHTML || '<tr><td colspan="6" class="p-24 text-center flex flex-col items-center justify-center text-slate-400 gap-4"><div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-2"><i data-lucide="inbox" class="w-8 h-8 opacity-50"></i></div><span class="uppercase font-black tracking-[0.2em] text-xs">Sin Proyectos Activos</span></td></tr>';
             
             // Actualizar Tarjetas KPI Superiores
             const solEl = document.getElementById('stat-soles'); if(solEl) solEl.textContent = `S/ ${solT.toLocaleString('en-US')}`;
@@ -2651,8 +2962,9 @@
                 const sStyle = getStatusStyles(p.status);
                 const initialOwner = p.owner ? p.owner.substring(0,2).toUpperCase() : 'NA';
                 
+                // MODIFICADO: Eliminado 'line-clamp-2' y 'h-10' para que el título sea completamente visible.
                 return `
-                <div class="card-executive p-0 cursor-pointer group flex flex-col h-full bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-slate-200/60 rounded-[24px]" onclick="openDetail(${p.id})">
+                <div class="card-executive p-0 cursor-pointer group flex flex-col h-full bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-slate-200/60 rounded-[24px]" onclick="openDetail(${p.id})" style="height: auto;">
                     
                     <!-- CABECERA -->
                     <div class="relative p-6 border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white overflow-hidden shrink-0">
@@ -2664,7 +2976,8 @@
                             <span class="text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border ${sStyle.bg} ${sStyle.text} ${sStyle.border} shadow-sm backdrop-blur-md">${p.status}</span>
                         </div>
                         
-                        <h4 class="relative z-10 text-[13px] font-black text-slate-800 uppercase leading-snug line-clamp-2 group-hover:text-indigo-600 transition-colors h-10" title="${p.name}">${p.name}</h4>
+                        <!-- TÍTULO COMPLETO: ahora sin límite de altura y con 'whitespace-normal' -->
+                        <h4 class="relative z-10 text-[13px] font-black text-slate-800 uppercase leading-snug break-words group-hover:text-indigo-600 transition-colors pr-10" title="${p.name}">${p.name}</h4>
                     </div>
 
                     <!-- CONTENIDO CENTRAL -->
@@ -3063,6 +3376,11 @@
                 const opt = document.createElement('option');
                 opt.value = p.id;
                 opt.textContent = `[${p.code}] ${p.name}`;
+                // NUEVO: Truncar el texto de la opción si es muy largo para el ancho del select
+                opt.style.maxWidth = '250px';
+                opt.style.whiteSpace = 'nowrap';
+                opt.style.overflow = 'hidden';
+                opt.style.textOverflow = 'ellipsis';
                 select.appendChild(opt);
             });
             select.value = current;
@@ -3119,7 +3437,7 @@
                 <select onchange="modalTasks[${i}].status=this.value" class="eng-field !py-2">
                     <option value="todo" ${t.status==='todo'?'selected':''}>Pendiente</option>
                     <option value="prog" ${t.status==='prog'?'selected':''}>Progreso</option>
-                    <option value="done" ${t.status==='done'?'selected':''}>Hecho</option>
+                    <option value="done" ${t.status==='done'?'selected':''}>Finalizado</option>
                 </select>
                 <div class="flex justify-center"><button type="button" onclick="modalTasks.splice(${i},1); renderModalTasks()" class="text-rose-600 hover:text-rose-700 hover:scale-110 transition-all active:scale-95"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>
             </div>`).join('');
@@ -3386,11 +3704,69 @@
         function initBIAnalytics() {
             const ctxRadar = document.getElementById('chart-radar'), ctxSCurve = document.getElementById('chart-s-curve'), ctxPie = document.getElementById('chart-pie-capex'), ctxPolar = document.getElementById('chart-polar-resources');
             if(!ctxRadar || !ctxSCurve || !ctxPie || !ctxPolar) return;
+            
+            // Configuración Global Profesional Chart.js
+            Chart.defaults.font.family = "'Plus Jakarta Sans', 'Segoe UI', sans-serif";
+            Chart.defaults.color = '#64748b';
+            Chart.defaults.scale.grid.color = '#f1f5f9'; // Líneas de cuadrícula muy tenues
+            
             Object.values(charts).forEach(c => { if(c && c.destroy) c.destroy(); });
-            charts.radar = new Chart(ctxRadar.getContext('2d'), { type: 'radar', data: { labels: ['Plazos', 'Calidad', 'Presupuesto', 'Recursos', 'Alcance'], datasets: [{ label: 'Performance', data: [0,0,0,0,0], backgroundColor: 'rgba(79,70,229,0.2)', borderColor: '#4f46e5', borderWidth: 2 }] }, options: { maintainAspectRatio: false, scales: { r: { beginAtZero: true, max: 100 } }, plugins: { legend: { display: false } } } });
-            charts.sCurve = new Chart(ctxSCurve.getContext('2d'), { type: 'line', data: { labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'], datasets: [{ label: 'Planificado', data: [5, 12, 25, 40, 55, 70, 85, 95, 100, 100, 100, 100], borderColor: '#cbd5e1', borderDash: [5, 5], fill: false }, { label: 'Ejecutado', data: [4, 10, 22, 38, 50], borderColor: '#4f46e5', backgroundColor: 'rgba(79,70,229,0.1)', fill: true }] }, options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true, max: 100 } } } });
-            charts.pie = new Chart(ctxPie.getContext('2d'), { type: 'doughnut', data: { labels: ['Equipos', 'Mano de Obra', 'Servicios', 'Otros'], datasets: [{ data: [0,0,0,0], backgroundColor: ['#4f46e5', '#4338ca', '#020617', '#e2e8f0'] }] }, options: { maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom' } } } });
-            charts.polar = new Chart(ctxPolar.getContext('2d'), { type: 'polarArea', data: { labels: ['Mecánica', 'Eléctrica', 'TI', 'Logística', 'Control'], datasets: [{ data: [0,0,0,0,0], backgroundColor: ['rgba(79,70,229,0.6)', 'rgba(67,56,202,0.6)', 'rgba(2,6,23,0.6)', 'rgba(226,232,240,0.6)', 'rgba(79,70,229,0.3)'] }] }, options: { maintainAspectRatio: false, plugins: { legend: { position: 'right' } } } });
+            
+            charts.radar = new Chart(ctxRadar.getContext('2d'), { 
+                type: 'radar', 
+                data: { 
+                    labels: ['Plazos', 'Calidad', 'Presupuesto', 'Recursos', 'Alcance'], 
+                    datasets: [{ label: 'Performance', data: [0,0,0,0,0], backgroundColor: 'rgba(225, 29, 72, 0.2)', borderColor: '#e11d48', borderWidth: 2, pointBackgroundColor: '#e11d48' }] 
+                }, 
+                options: { 
+                    maintainAspectRatio: false, 
+                    scales: { r: { beginAtZero: true, max: 100, ticks: { display: false } } }, 
+                    plugins: { legend: { display: false } } 
+                } 
+            });
+            
+            charts.sCurve = new Chart(ctxSCurve.getContext('2d'), { 
+                type: 'line', 
+                data: { 
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'], 
+                    datasets: [
+                        { label: 'Planificado', data: [5, 12, 25, 40, 55, 70, 85, 95, 100, 100, 100, 100], borderColor: '#cbd5e1', borderDash: [5, 5], borderWidth: 2, fill: false, pointRadius: 0 }, 
+                        { label: 'Ejecutado', data: [4, 10, 22, 38, 50], borderColor: '#4f46e5', backgroundColor: 'rgba(79,70,229,0.1)', borderWidth: 3, fill: true, tension: 0.4 }
+                    ] 
+                }, 
+                options: { 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8 } } }, 
+                    scales: { y: { beginAtZero: true, max: 100, border: {display: false} }, x: { grid: {display: false}, border: {display: false} } } 
+                } 
+            });
+            
+            charts.pie = new Chart(ctxPie.getContext('2d'), { 
+                type: 'doughnut', 
+                data: { 
+                    labels: ['Equipos', 'Mano de Obra', 'Servicios', 'Otros'], 
+                    datasets: [{ data: [0,0,0,0], backgroundColor: ['#1e40af', '#3b82f6', '#60a5fa', '#bfdbfe'], borderWidth: 0 }] 
+                }, 
+                options: { 
+                    maintainAspectRatio: false, 
+                    cutout: '75%', 
+                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8 } } } 
+                } 
+            });
+            
+            charts.polar = new Chart(ctxPolar.getContext('2d'), { 
+                type: 'polarArea', 
+                data: { 
+                    labels: ['Mecánica', 'Eléctrica', 'TI', 'Logística', 'Control'], 
+                    datasets: [{ data: [0,0,0,0,0], backgroundColor: ['rgba(109, 40, 217, 0.8)', 'rgba(139, 92, 246, 0.8)', 'rgba(167, 139, 250, 0.8)', 'rgba(196, 181, 253, 0.8)', 'rgba(237, 233, 254, 0.8)'], borderWidth: 0 }] 
+                }, 
+                options: { 
+                    maintainAspectRatio: false, 
+                    scales: { r: { ticks: { display: false } } },
+                    plugins: { legend: { position: 'right', labels: { usePointStyle: true, boxWidth: 8 } } } 
+                } 
+            });
+            
             updateBIChartsData(window.projects);
         }
 
@@ -3616,10 +3992,19 @@
 
         // --- MANEJO DE ANUNCIOS ---
         function initAnnouncement() {
-            const saved = localStorage.getItem('renasa_announcement');
+            const saved = localStorage.getItem('renasa_announcements');
             if (saved) {
-                const data = JSON.parse(saved);
-                renderAnnouncement(data.text, data.type);
+                try {
+                    const data = JSON.parse(saved);
+                    if (Array.isArray(data)) {
+                        renderAnnouncements(data);
+                    } else {
+                        // Migración si existía el formato viejo de 1 solo anuncio
+                        const arr = [data];
+                        localStorage.setItem('renasa_announcements', JSON.stringify(arr));
+                        renderAnnouncements(arr);
+                    }
+                } catch(e) {}
             }
         }
 
@@ -3627,15 +4012,28 @@
             const text = document.getElementById('announcement-text').value.trim();
             const type = document.getElementById('announcement-type').value;
             if(!text) return notify("Escriba un mensaje");
-            const data = { text, type, date: new Date().toISOString() };
-            localStorage.setItem('renasa_announcement', JSON.stringify(data));
-            renderAnnouncement(text, type);
+            
+            const newAnnouncement = { text, type, date: new Date().toISOString() };
+            
+            // Cargar historial de anuncios
+            let arr = [];
+            const saved = localStorage.getItem('renasa_announcements');
+            if (saved) {
+                try { arr = JSON.parse(saved); if(!Array.isArray(arr)) arr = []; } catch(e) { arr = []; }
+            }
+            
+            // Añadir al principio y guardar
+            arr.unshift(newAnnouncement);
+            localStorage.setItem('renasa_announcements', JSON.stringify(arr));
+            
+            renderAnnouncements(arr);
             document.getElementById('announcement-text').value = '';
             notify("Anuncio publicado en el dashboard general", 'success');
         };
 
         window.deleteAnnouncement = function() {
-            localStorage.removeItem('renasa_announcement');
+            localStorage.removeItem('renasa_announcements');
+            localStorage.removeItem('renasa_announcement'); // Limpiar llave antigua por si acaso
             const container = document.getElementById('dashboard-announcement-container');
             if(container) {
                 container.innerHTML = '';
@@ -3644,24 +4042,39 @@
             notify("Tablón limpiado");
         };
 
-        function renderAnnouncement(text, type) {
+        function renderAnnouncements(announcements) {
             const container = document.getElementById('dashboard-announcement-container');
             if(!container) return;
+            
+            if(!announcements || announcements.length === 0) {
+                container.innerHTML = '';
+                container.classList.add('hidden');
+                return;
+            }
+            
             const config = {
                 'blue': { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-indigo-800', icon: 'info' },
                 'amber': { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-800', icon: 'alert-triangle' },
                 'red': { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-800', icon: 'alert-octagon' }
             };
-            const c = config[type] || config['blue'];
-            container.innerHTML = `
-                <div class="${c.bg} ${c.border} border p-4 rounded-2xl flex items-start gap-4 shadow-sm animate-view">
-                    <div class="mt-1"><i data-lucide="${c.icon}" class="w-5 h-5 ${c.text}"></i></div>
-                    <div class="flex-1">
-                        <h5 class="text-[9px] font-black uppercase tracking-widest ${c.text} opacity-70 mb-1">Anuncio General</h5>
-                        <p class="text-xs font-bold ${c.text} leading-relaxed">${text}</p>
+            
+            let html = '';
+            announcements.forEach(a => {
+                const c = config[a.type] || config['blue'];
+                let typeLabel = a.type === 'red' ? 'Alerta Crítica' : (a.type === 'amber' ? 'Advertencia' : 'Anuncio General');
+                
+                html += `
+                    <div class="${c.bg} ${c.border} border p-4 rounded-2xl flex items-start gap-4 shadow-sm animate-view w-full">
+                        <div class="mt-1"><i data-lucide="${c.icon}" class="w-5 h-5 ${c.text}"></i></div>
+                        <div class="flex-1">
+                            <h5 class="text-[9px] font-black uppercase tracking-widest ${c.text} opacity-70 mb-1">${typeLabel}</h5>
+                            <p class="text-xs font-bold ${c.text} leading-relaxed">${a.text}</p>
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
+            });
+            
+            container.innerHTML = html;
             container.classList.remove('hidden');
             if(window.lucide) lucide.createIcons();
         }
@@ -3783,7 +4196,7 @@
                                 <span class="text-[9px] font-black px-2 py-0.5 rounded border uppercase tracking-widest shrink-0 ${sColor}">${p.status}</span>
                                 <span class="text-[9px] font-black px-2 py-0.5 rounded border uppercase tracking-widest shrink-0 ${pColor}">${p.priority}</span>
                             </div>
-                            <h2 class="text-xl font-black tracking-tight uppercase text-slate-800 leading-tight truncate w-full" title="${p.name}">${p.name}</h2>
+                            <h2 class="text-xl font-black tracking-tight uppercase text-slate-800 leading-tight break-words w-full" title="${p.name}">${p.name}</h2>
                         </div>
                     </div>
                     <div class="flex items-center space-x-3 relative z-10 shrink-0 pl-4 bg-white">
